@@ -4,7 +4,7 @@ import controlVignere
 def keyGenerator():
     alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     key = ''
-    for i in range(1000):
+    for i in range(69420):
         key += alphabet[random.randint(0,25)]
     return key
 

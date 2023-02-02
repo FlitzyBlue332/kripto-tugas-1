@@ -1,12 +1,14 @@
-def spaceKiller(ptext:str):
+def falseCharKiller(input:str):
+    input = input.upper()
+    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     output = ''
-    for i in range(len(ptext)):
-        if(ptext[i] != ' '):
-            output += ptext[i]
+    for i in range(len(input)):
+        if(input[i] in alphabet):
+            output += input[i]
     return output
 
-def playfairArrptextPrepp(ptext:str):
-    prepptext = spaceKiller(ptext).upper()
+def prepText(ptext:str):
+    prepptext = falseCharKiller(ptext.upper())
     filler = 'X'
     output = []
     n = len(prepptext)
@@ -24,6 +26,7 @@ def playfairArrptextPrepp(ptext:str):
     return output
 
 def playfairChiperKeyArr(key:str):
+    key = falseCharKiller(key)
     keyArr = [[],[],[],[],[]]
     arr = []
     for i in range(len(key)):
@@ -43,16 +46,87 @@ def playfairChiperKeyArr(key:str):
     
     return keyArr
 
-# def playfairChiperEncoder(ptext:str, key:str):
-#     prepp_ptext = spaceKiller(ptext).upper
-#     prepp_key = spaceKiller(key).upper
-#     arrKey = playfairChiperKeyArr(prepp_key)
+def searchCoor(input:chr, key):
+    '''
+    nyari posisi huruf dalam key
+    '''
+    coor = [1,1]
+    for i in range(5):
+        for j in range(5):
+            if(input[0] == key[i][j]):
+                coor[0] = j
+                coor[1] = i
+                return coor
+    return None
+
+def processorEnc(input:str, key):
+    '''
+    proses enc disini uwu!, cuman boleh dua pasang huruf nya!
+    '''
+    coor1 = searchCoor(input[0], key)
+    coor2 = searchCoor(input[1], key)
+
+    if(coor1[0] == coor2[0]):
+        coor1[1] = (coor1[1] + 1) % 5
+        coor2[1] = (coor2[1] + 1) % 5
+    elif(coor1[1] == coor2[1]):
+        coor1[0] = (coor1[0] + 1) % 5
+        coor2[0] = (coor2[0] + 1) % 5
+    else:
+        temp = [coor1[0], coor1[1]]
+        coor1 = [coor2[0], coor1[1]]
+        coor2 = [temp[0], coor2[1]]
     
-#     cptext = ''
+    output = key[coor1[1]][coor1[0]] + key[coor2[1]][coor2[0]]
+    return output
 
-#     #chipering
-#     for i in
+def playfairEnc(ptext:str, key:str):
+    '''
+    encrypt text pakai playfair nya
+    '''
+    processed_ptext = prepText(ptext)
+    arrkey = playfairChiperKeyArr(key)
+    output = ''
 
-a = playfairArrptextPrepp('ASADAYOO')
-for couple in a:
-    print(couple, end=', ')
+    for pair in processed_ptext:
+        output += processorEnc(pair, arrkey)
+    return output
+
+def playfairDec(cptext:str, key:str):
+    '''
+    decrypt text pakai playfair nya
+    '''
+    processed_cptext = prepText(cptext)
+    arrkey = playfairChiperKeyArr(key)
+    output = ''
+
+    for pair in processed_cptext:
+        output += processorDec(pair, arrkey)
+    return output
+
+def processorDec(input:str, key):
+    '''
+    proses dec disini uwu!, cuman boleh dua pasang huruf nya!
+    '''
+    coor1 = searchCoor(input[0], key)
+    coor2 = searchCoor(input[1], key)
+
+    if(coor1[0] == coor2[0]):
+        coor1[1] = (coor1[1] - 1) % 5
+        coor2[1] = (coor2[1] - 1) % 5
+    elif(coor1[1] == coor2[1]):
+        coor1[0] = (coor1[0] - 1) % 5
+        coor2[0] = (coor2[0] - 1) % 5
+    else:
+        temp = [coor1[0], coor1[1]]
+        coor1 = [coor2[0], coor1[1]]
+        coor2 = [temp[0], coor2[1]]
+    
+    output = key[coor1[1]][coor1[0]] + key[coor2[1]][coor2[0]]
+    return output
+
+
+#testing
+enc = playfairEnc("saya adalah manusia super uwu 222!!", "schwarzuwu")
+print(enc)
+print(playfairDec(enc, "schwarzuwu"))
