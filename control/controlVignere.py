@@ -42,7 +42,7 @@ def spaceKiller(ptext:str):
 
     
 # test
-print(vignereChiperDecrypt('UMOCYEVNIQJZITDOIJMKPYNUFWTSZIA','uwu'))
-print(vignereChiperEncrypt('a quick brown fox jumps over a lazy dog','uwu'))
+# print(vignereChiperDecrypt('UMOCYEVNIQJZITDOIJMKPYNUFWTSZIA','uwu'))
+# print(vignereChiperEncrypt('a quick brown fox jumps over a lazy dog','uwu'))
 
 

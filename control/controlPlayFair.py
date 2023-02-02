@@ -127,6 +127,6 @@ def processorDec(input:str, key):
 
 
 #testing
-enc = playfairEnc("saya adalah manusia super uwu 222!!", "schwarzuwu")
-print(enc)
-print(playfairDec(enc, "schwarzuwu"))
+# enc = playfairEnc("saya adalah manusia super uwu 222!!", "schwarzuwu")
+# print(enc)
+# print(playfairDec(enc, "schwarzuwu"))

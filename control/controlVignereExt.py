@@ -32,22 +32,22 @@ def spaceKiller(ptext:str):
 
 
 # test
-f1 = open("sussy_gavial.gif", 'rb')
-ptext = f1.read()
-f1.close()
+# f1 = open("sussy_gavial.gif", 'rb')
+# ptext = f1.read()
+# f1.close()
 
-f2 = open("sussy_gavial_enc.gif", 'wb')
-cptext = vignereExtEncrypt(ptext,'uwu')
-f2.write(cptext)
+# f2 = open("sussy_gavial_enc.gif", 'wb')
+# cptext = vignereExtEncrypt(ptext,'uwu')
+# f2.write(cptext)
 
-f2.close()
-f2 = open("sussy_gavial_enc.gif", 'rb')
-cptext2 = f2.read()
-f2.close()
+# f2.close()
+# f2 = open("sussy_gavial_enc.gif", 'rb')
+# cptext2 = f2.read()
+# f2.close()
 
-deccptext2 = vignereExtDecrypt(cptext2, 'uwu')
-f1 = open("sussy_gavial_dec.gif", 'wb')
-f1.write(deccptext2)
+# deccptext2 = vignereExtDecrypt(cptext2, 'uwu')
+# f1 = open("sussy_gavial_dec.gif", 'wb')
+# f1.write(deccptext2)
 
-print(ptext[0], (cptext[0]), cptext2[0], deccptext2[0])
-print(len(ptext), len(cptext), len(cptext2), len(deccptext2))
+# print(ptext[0], (cptext[0]), cptext2[0], deccptext2[0])
+# print(len(ptext), len(cptext), len(cptext2), len(deccptext2))
