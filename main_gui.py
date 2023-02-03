@@ -49,7 +49,8 @@ def decProcess():
             set_entry_ptext(vigenereExt.vignereExtDecrypt(cptext, key))
         elif(cipher == "Playfair" and len(key)>0):
             set_entry_ptext(playfair.playfairDec(cptext, key))
-        elif(cipher == "One Time Pad"and len(key)>0):
+        elif(cipher == "One Time Pad"):
+            key = loadfiletxt("Load Key Cipher")
             set_entry_ptext(onetimepad.oneTimePadDecrypt(cptext, key))
         elif(len(key) <= 0):
             messagebox.showerror("Key Empty!!!", "There's no text in the key box nyaa!!!\n This cipher need key nyaa!!")
@@ -61,17 +62,23 @@ def decProcess():
 def encByteProcess():
     filename = entry_byte_ptext.get()
     key = entry_key.get()
-    ptext, extention = loadfilebytes(filename)
-    
-    cptext = vigenereExt.vignereExtByteEncrypt(ptext, key)
-    savefilebytes(cptext, 'Save Encrypted File', 'Encrypted_File', extention)
+    if(len(key) > 0):
+        ptext, extention = loadfilebytes(filename)
+        
+        cptext = vigenereExt.vignereExtByteEncrypt(ptext, key)
+        savefilebytes(cptext, 'Save Encrypted File', 'Encrypted_File', extention)
+    else:
+        messagebox.showerror("Key Empty!!!", "There's no text in the key box nyaa!!!\n This cipher need key nyaa!!")
 
 def decByteProcess():
     filename = entry_byte_cptext.get()
     key = entry_key.get()
-    cptext, extention = loadfilebytes(filename)
-    ptext = vigenereExt.vignereExtByteDecrypt(cptext, key)
-    savefilebytes(ptext, 'Save Decrypted File', 'Decrypted_File', extention)
+    if(len(key) > 0):
+        cptext, extention = loadfilebytes(filename)
+        ptext = vigenereExt.vignereExtByteDecrypt(cptext, key)
+        savefilebytes(ptext, 'Save Decrypted File', 'Decrypted_File', extention)
+    else:
+        messagebox.showerror("Key Empty!!!", "There's no text in the key box nyaa!!!\n This cipher need key nyaa!!")
 
 # file manage
 ## save file
@@ -90,8 +97,8 @@ def savefilebytes(content, title_name:str, default_name:str, extention:str):
         f.close()
 
 ## load file
-def loadfiletxt():
-    f = askopenfile(mode='r', filetypes=[('Text documents', '.txt')])
+def loadfiletxt(title:str):
+    f = askopenfile(mode='r', title=title,filetypes=[('Text documents', '.txt')])
     if(f is not None):
         content = f.read()
         return content
@@ -122,15 +129,39 @@ def change_cipher(changed_to:str):
 
 # func untuk set entry
 def set_entry_ptext(input:str):
-    last = len(entry_ptext.get())
-    entry_ptext.delete(0, last)
-    entry_ptext.insert(0, input)
+    curr_entry = entry_ptext.get()
+    last = len(curr_entry)
+    if(curr_entry == input):
+        with_space = ''
+        for i in range(len(input)):
+            if(i>0 and i%5 == 0):
+                with_space += ' '
+                with_space += input[i]
+            else:
+                with_space += input[i]
+        entry_ptext.delete(0, last)
+        entry_ptext.insert(0, with_space)
+    else:
+        entry_ptext.delete(0, last)
+        entry_ptext.insert(0, input)
     return
 
 def set_entry_cptext(input:str):
-    last = len(entry_cptext.get())
-    entry_cptext.delete(0, last)
-    entry_cptext.insert(0, input)
+    curr_entry = entry_cptext.get()
+    last = len(curr_entry)
+    if(curr_entry == input):
+        with_space = ''
+        for i in range(len(input)):
+            if(i>0 and i%5 == 0):
+                with_space += ' '
+                with_space += input[i]
+            else:
+                with_space += input[i]
+        entry_cptext.delete(0, last)
+        entry_cptext.insert(0, with_space)
+    else:
+        entry_cptext.delete(0, last)
+        entry_cptext.insert(0, input)
     return
 
 def set_entry_key(input:str):
@@ -174,6 +205,14 @@ image_1 = canvas.create_image(
     727.0,
     310.0,
     image=image_image_1
+)
+
+image_image_2 = PhotoImage(
+    file=relative_to_assets("image_2.png"))
+image_1 = canvas.create_image(
+    350,
+    500,
+    image=image_image_2
 )
 
 
@@ -263,7 +302,7 @@ button_ptext_open = Button(
     text="Load Text",
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: set_entry_ptext(loadfiletxt()),
+    command=lambda: set_entry_ptext(loadfiletxt("Load File Plaintext")),
     relief="flat"
 )
 button_ptext_save = Button(
@@ -290,7 +329,7 @@ button_cptext_open = Button(
     text="Load Text",
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: set_entry_cptext(loadfiletxt()),
+    command=lambda: set_entry_cptext(loadfiletxt("Load File Ciphertext")),
     relief="flat"
 )
 button_cptext_save = Button(
@@ -370,7 +409,7 @@ button_upload_key = Button(
     text="Load Key",
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: set_entry_key(loadfiletxt()),
+    command=lambda: set_entry_key(loadfiletxt("Load File Key")),
     relief="flat"
 )
 button_upload_key.place(
