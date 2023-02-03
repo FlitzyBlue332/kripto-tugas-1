@@ -11,7 +11,7 @@ untuk run programnya bisa buka terminal pada directory main.gui lalu run
 >python main_gui.py
 
 ## How To Use
-![Screenshot Menu utama](http://url/to/img.png)  
+![Screenshot Menu utama](https://github.com/FlitzyBlue332/kripto-tugas-1/blob/main/Screenshots/Screenshot%202023-02-03%20174407.png)
 ### Text Encryption and Decryption
 Jika ingin melakukan enkripsi text:
 1. isi text box plaintext atau tekan tombol load text dan pilih file teks berisi plaintext
