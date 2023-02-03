@@ -4,7 +4,7 @@ def trueVignereChipherKey(ptext, key):
         true_key.append(key[i % len(key)])
     return true_key
 
-def vignereExtEncrypt(ptext, key):
+def vignereExtByteEncrypt(ptext, key):
     true_key = trueVignereChipherKey(ptext, key)
     cptext = b''
 
@@ -13,12 +13,30 @@ def vignereExtEncrypt(ptext, key):
         cptext+=enc_char
     return cptext
 
-def vignereExtDecrypt(cptext, key):
+def vignereExtByteDecrypt(cptext, key):
     true_key = trueVignereChipherKey(cptext, key)
     ptext = b''
 
     for i in range(len(cptext)):
         enc_char = ((cptext[i] - ord(true_key[i])) %256).to_bytes(1, 'little')
+        ptext += enc_char
+    return ptext
+
+def vignereExtEncrypt(ptext, key):
+    true_key = trueVignereChipherKey(ptext, key)
+    cptext = ''
+
+    for i in range(len(ptext)):
+        enc_char = chr((ord(ptext[i]) + ord(true_key[i]))%256)
+        cptext+=enc_char
+    return cptext
+
+def vignereExtDecrypt(cptext, key):
+    true_key = trueVignereChipherKey(cptext, key)
+    ptext = ''
+
+    for i in range(len(cptext)):
+        enc_char = chr((ord(cptext[i]) - ord(true_key[i])) %256)
         ptext += enc_char
     return ptext
 
@@ -37,15 +55,16 @@ def spaceKiller(ptext:str):
 # f1.close()
 
 # f2 = open("sussy_gavial_enc.gif", 'wb')
-# cptext = vignereExtEncrypt(ptext,'uwu')
+# cptext = vignereExtByteEncrypt(ptext,'feaFjnhd:Uefjhnw;loeufhefnhleo8iufGbehujewhbfl')
 # f2.write(cptext)
-
 # f2.close()
+
 # f2 = open("sussy_gavial_enc.gif", 'rb')
 # cptext2 = f2.read()
+# print(cptext2[0])
 # f2.close()
 
-# deccptext2 = vignereExtDecrypt(cptext2, 'uwu')
+# deccptext2 = vignereExtByteDecrypt(cptext2, 'feaFjnhd:Uefjhnw;loeufhefnhleo8iufGbehujewhbfl')
 # f1 = open("sussy_gavial_dec.gif", 'wb')
 # f1.write(deccptext2)
 
