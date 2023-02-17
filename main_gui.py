@@ -116,11 +116,8 @@ def loadfilebytes(filename:str):
 
 
 # GUI
-OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"D:\COODING\Kripto\kripto-tugas-1\build\assets")
-
 def relative_to_assets(path: str) -> Path:
-    return ASSETS_PATH / Path(path)
+    return  'build/assets/' + path
 
 # func set chiper
 def change_cipher(changed_to:str):
